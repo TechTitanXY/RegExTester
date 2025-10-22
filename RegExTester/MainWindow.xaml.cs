@@ -18,6 +18,7 @@ namespace RegExTester
         public MainWindow()
         {
             InitializeComponent();
+            Title = "Regex Tester by Phillip Galey";
             DataContext = new MainViewModel();
         }
 
