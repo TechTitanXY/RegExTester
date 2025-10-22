@@ -13,34 +13,35 @@ namespace RegExTester
     public partial class MainWindow : Window
     {
         // Reentrancy guard field added here
-        private bool _isUpdatingRichText;
+        private bool _isUpdatingPreview;
 
         public MainWindow()
         {
             InitializeComponent();
-            Title = "Regex Tester by Phillip Galey";
             DataContext = new MainViewModel();
         }
 
         private void TestRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (_isUpdatingRichText) return;
+            if (_isUpdatingPreview) return;
             if (DataContext is not MainViewModel viewModel) return;
 
-            // Update ViewModel's TestText
+            // Get plain text from the editable RichTextBox
             string text = new TextRange(TestRichTextBox.Document.ContentStart, TestRichTextBox.Document.ContentEnd).Text;
             viewModel.TestText = text;
 
-            /// Update highlighted text
             try
             {
-                _isUpdatingRichText = true;
-                TestRichTextBox.Document.Blocks.Clear();
-                TestRichTextBox.Document.Blocks.Add(RegexHighlighter.HighlightMatches(text, viewModel.Pattern));
+                _isUpdatingPreview = true;
+
+                // Update read-only preview document only — do not touch the editing document
+                var previewDoc = PreviewRichTextBox.Document;
+                previewDoc.Blocks.Clear();
+                previewDoc.Blocks.Add(RegexHighlighter.HighlightMatches(text, viewModel.Pattern));
             }
             finally
             {
-                _isUpdatingRichText = false;
+                _isUpdatingPreview = false;
             }
         }
     }
