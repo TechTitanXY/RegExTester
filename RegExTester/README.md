@@ -54,4 +54,13 @@ Built to demonstrate modern WPF development with MVVM, modular architecture, and
 - RegEx cheat sheet panel
 - Dark mode toggle
 
+ISSUE RESOLVED:
+
+Issue: Pasting text into the RichTextBox triggered a StackOverflowException.
+
+Cause: The TextChanged event handler (TestRichTextBox_TextChanged) was mutating TestRichTextBox.Document during its own execution. This re-triggered the same event recursively, leading to a stack overflow.
+
+Fix: Introduced a reentrancy guard (_isUpdatingRichText) to prevent recursive entry during document updates. This ensures the handler only runs once per change cycle.
+
+Result: RichTextBox now safely displays pasted content, highlights matches in real time, and avoids infinite recursion.
 ---
