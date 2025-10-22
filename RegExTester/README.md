@@ -14,7 +14,7 @@ Designed to showcase clean architecture, responsive UI, and modular design.
 
 ## 🧪 Tech Stack
 
-| Layer         | Technology                     |
+| Layer        | Technology                      |
 |--------------|---------------------------------|
 | UI           | WPF (.NET 9.0)                  |
 | Logic        | C# 12, MVVM                     |
