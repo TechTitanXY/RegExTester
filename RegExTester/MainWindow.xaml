@@ -1,0 +1,41 @@
+﻿<Window x:Class="RegExTester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RegExTester"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+        <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Label for Pattern -->
+            <RowDefinition Height="Auto"/>
+            <!-- Pattern TextBox -->
+            <RowDefinition Height="Auto"/>
+            <!-- Label for Test Text -->
+            <RowDefinition Height="*"/>
+            <!-- RichTextBox -->
+            <RowDefinition Height="Auto"/>
+            <!-- MatchResult -->
+        </Grid.RowDefinitions>
+
+        <!-- Label for Pattern Input -->
+            <TextBlock Grid.Row="0" Text="Regular Expression Pattern:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+            <!-- Pattern Input -->
+            <TextBox Grid.Row="1" Text="{Binding Pattern, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,0,10" />
+
+            <!-- Label for Test Text -->
+            <TextBlock Grid.Row="2" Text="Test Text:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+            <!-- RichTextBox for Test Input -->
+            <RichTextBox Grid.Row="3" x:Name="TestRichTextBox" Margin="0,0,0,10"
+                     VerticalScrollBarVisibility="Auto"
+                     TextChanged="TestRichTextBox_TextChanged" />
+
+            <!-- Match Result -->
+            <TextBlock Grid.Row="4" Text="{Binding MatchResult}" Foreground="DarkGreen" Margin="0,10,0,0"/>
+        </Grid>
+</Window>
