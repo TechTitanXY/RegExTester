@@ -18,7 +18,7 @@ Designed to showcase clean architecture, responsive UI, and modular design.
 |--------------|---------------------------------|
 | UI           | WPF (.NET 9.0)                  |
 | Logic        | C# 12, MVVM                     |
-| Highlighting | RichTextBox + RegexHighlighter |
+| Highlighting | RichTextBox + RegexHighlighter  |
 | Commands     | RelayCommand (ICommand)         |
 | Export       | File I/O to Desktop             |
 
