@@ -12,6 +12,9 @@ namespace RegExTester
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Reentrancy guard field added here
+        private bool _isUpdatingRichText;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -20,13 +23,24 @@ namespace RegExTester
 
         private void TestRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (_isUpdatingRichText) return;
             if (DataContext is not MainViewModel viewModel) return;
 
+            // Update ViewModel's TestText
             string text = new TextRange(TestRichTextBox.Document.ContentStart, TestRichTextBox.Document.ContentEnd).Text;
             viewModel.TestText = text;
 
-            TestRichTextBox.Document.Blocks.Clear();
-            TestRichTextBox.Document.Blocks.Add(RegexHighlighter.HighlightMatches(text, viewModel.Pattern));
+            /// Update highlighted text
+            try
+            {
+                _isUpdatingRichText = true;
+                TestRichTextBox.Document.Blocks.Clear();
+                TestRichTextBox.Document.Blocks.Add(RegexHighlighter.HighlightMatches(text, viewModel.Pattern));
+            }
+            finally
+            {
+                _isUpdatingRichText = false;
+            }
         }
     }
 }
